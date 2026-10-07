@@ -1,0 +1,57 @@
+<!doctype html>
+<title>System Design Depths</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Core system design concepts, each explained at three depths: whiteboard intuition, design-review mechanics, and production failure modes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <p class="eyebrow">Field notes for building at scale</p>
+      <h1>System Design Depths</h1>
+      <p class="lede">17 core concepts, each explained three ways. Set the depth once and read straight through, or open any concept and climb the ladder from intuition to production.</p>
+    </div>
+    <div class="dial" role="radiogroup" aria-label="Explanation depth">
+      <button type="button" role="radio" data-depth="0" aria-checked="false">
+        <span class="bars" data-lv="0"><i></i><i></i><i></i></span>
+        <span><b>L1</b> <span class="nm">Whiteboard</span></span>
+        <small>Intuition, no jargon</small>
+      </button>
+      <button type="button" role="radio" data-depth="1" aria-checked="true">
+        <span class="bars" data-lv="1"><i></i><i></i><i></i></span>
+        <span><b>L2</b> <span class="nm">Design review</span></span>
+        <small>Mechanics and trade-offs</small>
+      </button>
+      <button type="button" role="radio" data-depth="2" aria-checked="false">
+        <span class="bars" data-lv="2"><i></i><i></i><i></i></span>
+        <span><b>L3</b> <span class="nm">Production</span></span>
+        <small>Failure modes and the math</small>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="index" aria-label="Concepts">
+      <label for="q" class="sr">Search concepts</label>
+      <input id="q" type="search" placeholder="Search concepts" autocomplete="off">
+      <div id="nav"></div>
+    </nav>
+    <main id="sheet" class="sheet" tabindex="-1"></main>
+  </div>
+
+  <footer>
+    <kbd>/</kbd> search · <kbd>j</kbd> <kbd>k</kbd> next / previous · <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> depth
+  </footer>
+</div>
+
+<script src="data/fundamentals.js"></script>
+<script src="data/storage.js"></script>
+<script src="data/distributed.js"></script>
+<script src="data/async.js"></script>
+<script src="data/edge.js"></script>
+<script src="app.js"></script>
+<script src="keys.js"></script>
