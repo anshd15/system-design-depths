@@ -18,6 +18,14 @@ Each concept also lists trade-offs, an interview prompt, and related concepts.
 - **Async:** Message Queues, Event Streaming, Idempotency
 - **Edge:** CDN, Rate Limiting, API Gateway
 
+## Architectures
+
+Reference designs that combine the concepts, each with back-of-the-envelope numbers, a request path, three depths, key decisions, and a follow-up question:
+
+URL Shortener, Search Typeahead, YouTube, LinkedIn, WhatsApp, Uber, Dropbox, Ticketmaster, Payment System.
+
+These are interview-style designs drawn from public engineering writing. Real internals differ.
+
 ## Run it
 
 No build step. Open `index.html` in a browser, or serve the folder:
