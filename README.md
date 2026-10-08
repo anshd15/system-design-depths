@@ -22,7 +22,7 @@ Each concept also lists trade-offs, an interview prompt, and related concepts.
 
 Reference designs that combine the concepts, each with back-of-the-envelope numbers, a request path, three depths, key decisions, and a follow-up question:
 
-URL Shortener, Search Typeahead, YouTube, LinkedIn, WhatsApp, Uber, Dropbox, Ticketmaster, Payment System.
+URL Shortener, Search Typeahead, YouTube, LinkedIn, WhatsApp, Uber, Dropbox, Ticketmaster, Payment System, Netflix, Instagram, Google Docs, Twitter / X, Slack, Google Maps, Spotify, Airbnb, Zoom, Web Crawler.
 
 These are interview-style designs drawn from public engineering writing. Real internals differ.
 
