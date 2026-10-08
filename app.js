@@ -6,7 +6,7 @@
     { k: "L2", name: "Design review" },
     { k: "L3", name: "Production" }
   ];
-  var CATS = ["Fundamentals", "Storage", "Distributed", "Async", "Edge"];
+  var CATS = ["Fundamentals", "Storage", "Distributed", "Async", "Edge", "Architectures"];
   var all = window.SD || [];
   var list = [];
   CATS.forEach(function (cat) {
@@ -14,6 +14,11 @@
   });
   var byId = {};
   list.forEach(function (c, i) { c.n = i + 1; byId[c.id] = c; });
+  // Reverse index: which architectures use each concept.
+  var usedIn = {};
+  list.forEach(function (c) {
+    (c.concepts || []).forEach(function (id) { (usedIn[id] = usedIn[id] || []).push(c.id); });
+  });
 
   var state = { depth: 1, id: list.length ? list[0].id : null, q: "" };
   try {
@@ -34,7 +39,7 @@
 
   function matches(c) {
     if (!state.q) return true;
-    var hay = (c.name + " " + c.tag + " " + c.cat + " " + c.depths.join(" ")).toLowerCase();
+    var hay = (c.name + " " + c.tag + " " + c.cat + " " + c.depths.join(" ") + " " + (c.flow || []).join(" ")).toLowerCase();
     return state.q.toLowerCase().split(/\s+/).every(function (w) { return hay.indexOf(w) !== -1; });
   }
 
@@ -52,10 +57,28 @@
     $("#nav").innerHTML = html || '<p class="empty">Nothing matches “' + esc(state.q) + '”.</p>';
   }
 
+  function chips(ids) {
+    return ids.filter(function (id) { return byId[id]; }).map(function (id) {
+      return '<a href="#' + id + '" data-id="' + id + '">' + byId[id].name + "</a>";
+    }).join("");
+  }
+
+  function blueprint(c) {
+    if (!c.scale && !c.flow) return "";
+    var scale = c.scale ? '<h4>Back of the envelope</h4><dl class="scale">' + c.scale.map(function (r) {
+      return "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>";
+    }).join("") + "</dl>" : "";
+    var flow = c.flow ? '<h4>Request path</h4><ol class="flow">' + c.flow.map(function (s) {
+      return "<li><span>" + s + "</span></li>";
+    }).join("") + "</ol>" : "";
+    return '<div class="blueprint">' + scale + flow + "</div>";
+  }
+
   function renderSheet() {
     var c = byId[state.id];
     if (!c) return;
     var prev = list[c.n - 2], next = list[c.n];
+    var isCase = c.cat === "Architectures";
 
     var rungs = LEVELS.map(function (L, d) {
       var on = d === state.depth;
@@ -69,20 +92,24 @@
       c.numbers.map(function (r) { return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; }).join("") +
       "</tbody></table></div>" : "";
 
-    var related = (c.related || []).filter(function (id) { return byId[id]; }).map(function (id) {
-      return '<a href="#' + id + '" data-id="' + id + '">' + byId[id].name + "</a>";
-    }).join("");
+    var related = chips(isCase ? c.concepts || [] : c.related || []);
+    var seenIn = isCase ? "" : chips(usedIn[c.id] || []);
+    var points = c.decisions || c.tradeoffs || [];
 
     $("#sheet").innerHTML =
       '<article aria-labelledby="concept-title">' +
       '<div class="meta"><span>' + c.cat + "</span><span>" + pad(c.n) + " / " + pad(list.length) + "</span></div>" +
       '<h2 id="concept-title">' + c.name + "</h2>" +
       '<p class="tag">' + c.tag + "</p>" +
+      (isCase ? '<p class="note">Reference design for interviews, drawn from public engineering writing. Real internals differ.</p>' : "") +
+      blueprint(c) +
       '<div class="ladder">' + rungs + "</div>" +
       '<div class="facts">' +
-      '<div><h4>Trade-offs</h4><ul class="trade">' + c.tradeoffs.map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul></div>" +
-      '<div><h4>Interview prompt</h4><div class="ask"><p>' + c.ask + "</p></div>" +
-      (related ? '<h4 style="margin-top:20px">Related</h4><div class="related">' + related + "</div>" : "") +
+      "<div><h4>" + (isCase ? "Key decisions" : "Trade-offs") + '</h4><ul class="trade' + (isCase ? " key" : "") + '">' +
+      points.map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul></div>" +
+      "<div><h4>" + (isCase ? "Follow-up question" : "Interview prompt") + '</h4><div class="ask"><p>' + c.ask + "</p></div>" +
+      (related ? '<h4 class="sp">' + (isCase ? "Built from" : "Related") + '</h4><div class="related">' + related + "</div>" : "") +
+      (seenIn ? '<h4 class="sp">Seen in</h4><div class="related">' + seenIn + "</div>" : "") +
       "</div></div>" + nums +
       '<nav class="pager" aria-label="Previous and next concept">' +
       (prev ? '<a href="#' + prev.id + '" data-id="' + prev.id + '"><span>Previous</span>' + prev.name + "</a>" : "") +

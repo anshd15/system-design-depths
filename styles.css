@@ -105,6 +105,22 @@ h4 { font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercas
 .trade { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .trade li { padding-left: 24px; position: relative; }
 .trade li::before { content: "\2194"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
+.trade.key li::before { content: "\25B8"; }
+h4.sp { margin-top: 20px; }
+
+/* Architecture blueprint */
+.note { font: 12.5px/1.5 var(--mono); color: var(--muted); margin: -16px 0 24px; }
+.blueprint { display: grid; gap: 10px; margin-bottom: 28px; }
+.blueprint h4 { margin: 8px 0 0; }
+.scale { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 20px; margin: 0; }
+.scale div { border-top: 1px solid var(--ink); padding-top: 8px; min-width: 0; }
+.scale dt { font: 12px/1.4 var(--mono); color: var(--muted); }
+.scale dd { margin: 4px 0 0; font: 600 19px/1.25 var(--display); font-variant-numeric: tabular-nums; }
+.flow { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
+.flow li { display: flex; align-items: center; gap: 6px; font: 13px var(--mono); }
+.flow li + li::before { content: "\2192"; color: var(--accent); }
+.flow span { padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+
 .ask { border: 1px dashed var(--line); border-radius: 8px; padding: 14px 16px; background: var(--paper); }
 .ask p { margin: 0; font-size: 15.5px; }
 .nums-wrap { overflow-x: auto; margin-top: 24px; }
