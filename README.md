@@ -1,5 +1,7 @@
 # System Design Depths
 
+**Live site:** https://anshd15.github.io/system-design-depths/
+
 A single-page study site for core system design concepts. Every concept is explained at three depths:
 
 | Level | Name | What you get |
@@ -39,3 +41,7 @@ Keyboard: `/` search, `j` / `k` next and previous concept, `1` `2` `3` switch de
 ## Add a concept
 
 Concepts live in `data/*.js`, one file per category. Push an object with `id`, `cat`, `name`, `tag`, `depths` (three strings, L1 to L3), `tradeoffs`, `ask`, and optional `numbers` and `related`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
